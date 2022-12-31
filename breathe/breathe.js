@@ -3,6 +3,7 @@ const context = canvas.getContext('2d');
 const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
 let circleText = document.getElementById('circle-text');
+context.font = "32px Arial";
 
 function drawCircle(radius, fill, strokeColor) {
     context.beginPath();
@@ -31,6 +32,8 @@ function animateBubble(startRadius, breathingIn) {
     let i = 0;
     let blue;
     breathingIn ? blue = 240 : blue = 0;
+    let text;
+    breathingIn ? text = "inhale" : text = "exhale";
     let timer = setInterval(() => {
         if (!isBreathing) {
             clearInterval(timer);
@@ -44,9 +47,10 @@ function animateBubble(startRadius, breathingIn) {
             breathingIn ? blue -= 3 : blue += 3;                         
             breathingIn ? currRadius += 1 : currRadius -= 1;
             context.clearRect(0, 0, canvas.width, canvas.height);
-
-            drawCircle(150, 'transparent', `rgba(51, 204, 0, 0.5)`);
-            drawCircle(currRadius, `rgba(51, 204, ${blue}, 0.5)`, 'transparent');                                                                                                                                                          
+            drawCircle(150, 'transparent', `rgba(51, 204, ${blue}, 0.5)`);
+            drawCircle(currRadius, `rgba(51, 204, ${blue}, 0.3)`, 'transparent');  
+            context.fillText(text, centerX - 50, centerY);
+            // circleText.innerText = Math.floor((i / 1000) % 10) + 1;                                                                                                                                                      
         }
     }, 50);
 }
