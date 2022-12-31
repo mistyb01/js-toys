@@ -30,17 +30,18 @@ playBtn.addEventListener('click', () => {
 
 function animateBubble(startRadius, breathingIn) {
     let currRadius = startRadius;
-    var i = 0;
-    var timer = setInterval(() => {
+    let i = 0;
+    let timer = setInterval(() => {
         if (!isBreathing) {
             clearInterval(timer);
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
         else if (i == 4000) {
             clearInterval(timer);
+            console.log(breathingIn);
             breathingIn ? animateBubble(150, false) : animateBubble(70, true);
         } else {
-            breathingIn? i += 50 : i -= 50;                                
+            i += 50;                                
             breathingIn ? currRadius += 1 : currRadius -= 1;
             context.clearRect(0, 0, canvas.width, canvas.height);
 
