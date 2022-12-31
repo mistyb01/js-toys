@@ -31,10 +31,10 @@ function inhale() {
             clearInterval(timer);
             exhale();
         }
-        i += 100;
+        i += 50;
         currRadius += 1;
         drawCircle(currRadius);
-    }, 100);
+    }, 50);
 }
 
 function exhale() {
@@ -45,10 +45,10 @@ function exhale() {
             clearInterval(timer);
             inhale();
         }
-        i += 100;
+        i += 50;
         currRadius -= 1;
         drawCircle(currRadius);
-    }, 100);
+    }, 50);
 }
 
 
