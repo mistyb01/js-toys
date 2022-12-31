@@ -4,6 +4,7 @@ const context = canvas.getContext('2d');
 const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
 
+let circleText = document.getElementById('circle-text');
 
 function drawCircle(radius, fill, strokeColor) {
     context.beginPath();
@@ -19,17 +20,17 @@ let isBreathing = false;
 const playBtn = document.querySelector('#play-btn');
 playBtn.addEventListener('click', () => {
     isBreathing = !isBreathing;
-    if (isBreathing) { inhale() }
+    if (isBreathing) { 
+        animateBubble(70, true) 
+        playBtn.innerText = 'end'
+    } else {
+        playBtn.innerText = 'play'
+    }
 });
 
-let currRadius = 70;
-
-let circleText = document.getElementById('circle-text');
-
-function inhale() {
-    currRadius = 70;
+function animateBubble(startRadius, breathingIn) {
+    let currRadius = startRadius;
     var i = 0;
-    circleText.innerText = 'breathe in';
     var timer = setInterval(() => {
         if (!isBreathing) {
             clearInterval(timer);
@@ -37,37 +38,14 @@ function inhale() {
         }
         else if (i == 4000) {
             clearInterval(timer);
-            exhale();
+            breathingIn ? animateBubble(150, false) : animateBubble(70, true);
         } else {
-            i += 50;                                
-            currRadius += 1;
+            breathingIn? i += 50 : i -= 50;                                
+            breathingIn ? currRadius += 1 : currRadius -= 1;
             context.clearRect(0, 0, canvas.width, canvas.height);
+
             drawCircle(150, 'transparent', '#ccffff');
             drawCircle(currRadius, '#33cccc', 'transparent');                                                                                                                                                          
         }
     }, 50);
 }
-
-function exhale() {
-    currRadius = 150;
-    var i = 0;
-    circleText.innerText = 'breathe out';
-    var timer = setInterval(() => {
-        if (!isBreathing) {
-            clearInterval(timer);
-            context.clearRect(0, 0, canvas.width, canvas.height);
-        }
-        else if (i == 4000) {
-            clearInterval(timer);
-            inhale();
-        } else {
-            i += 50;
-            currRadius -= 1;
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            drawCircle(150, 'transparent', '#ccffff');
-            drawCircle(currRadius, '#33cccc', 'transparent');
-        }
-    }, 50);
-}
-
-
