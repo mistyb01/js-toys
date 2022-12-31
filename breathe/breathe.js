@@ -1,9 +1,7 @@
 const canvas = document.getElementById('breatheCanvas');
 const context = canvas.getContext('2d');
-
 const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
-
 let circleText = document.getElementById('circle-text');
 
 function drawCircle(radius, fill, strokeColor) {
@@ -31,6 +29,8 @@ playBtn.addEventListener('click', () => {
 function animateBubble(startRadius, breathingIn) {
     let currRadius = startRadius;
     let i = 0;
+    let blue;
+    breathingIn ? blue = 240 : blue = 0;
     let timer = setInterval(() => {
         if (!isBreathing) {
             clearInterval(timer);
@@ -38,15 +38,31 @@ function animateBubble(startRadius, breathingIn) {
         }
         else if (i == 4000) {
             clearInterval(timer);
-            console.log(breathingIn);
             breathingIn ? animateBubble(150, false) : animateBubble(70, true);
         } else {
-            i += 50;                                
+            i += 50;       
+            breathingIn ? blue -= 3 : blue += 3;                         
             breathingIn ? currRadius += 1 : currRadius -= 1;
             context.clearRect(0, 0, canvas.width, canvas.height);
 
-            drawCircle(150, 'transparent', '#ccffff');
-            drawCircle(currRadius, '#33cccc', 'transparent');                                                                                                                                                          
+            drawCircle(150, 'transparent', `rgba(51, 204, 0, 0.5)`);
+            drawCircle(currRadius, `rgba(51, 204, ${blue}, 0.5)`, 'transparent');                                                                                                                                                          
         }
     }, 50);
 }
+
+/*
+list of improvements
+
+- a start countdown at the beginning
+- counts the seconds each time
+- more visual flair with bubble (changes colors between inhale and exhale)
+- ability to adjust the timing 
+- other breathing exercise options (like box breathing)
+- set the mood with ambient sound, particles, etc.
+- overall css styling
+
+*/
+
+
+
